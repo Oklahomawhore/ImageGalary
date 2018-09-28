@@ -17,6 +17,8 @@
 		4694A9212154AADE002C4B4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4694A91F2154AADE002C4B4F /* LaunchScreen.storyboard */; };
 		4694A92A2154ACD1002C4B4F /* ImageGallaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4694A9292154ACD1002C4B4F /* ImageGallaryViewController.swift */; };
 		4694A92C2154ADD9002C4B4F /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4694A92B2154ADD9002C4B4F /* ImageCollectionViewCell.swift */; };
+		46DCBB35215C630E00730DDA /* ImageGallaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DCBB34215C630E00730DDA /* ImageGallaryTableViewController.swift */; };
+		46DCBB37215C637E00730DDA /* ImageGallaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46DCBB36215C637E00730DDA /* ImageGallaryModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		4694A9222154AADE002C4B4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4694A9292154ACD1002C4B4F /* ImageGallaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallaryViewController.swift; sourceTree = "<group>"; };
 		4694A92B2154ADD9002C4B4F /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		46DCBB34215C630E00730DDA /* ImageGallaryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallaryTableViewController.swift; sourceTree = "<group>"; };
+		46DCBB36215C637E00730DDA /* ImageGallaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGallaryModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				461501C22156266200C605E9 /* ImageGallaryCollectionViewController.swift */,
 				461501C6215729C400C605E9 /* ImageView.swift */,
 				465C52FD2159D0E9007A0D8F /* ImageStore.swift */,
+				46DCBB34215C630E00730DDA /* ImageGallaryTableViewController.swift */,
+				46DCBB36215C637E00730DDA /* ImageGallaryModel.swift */,
 			);
 			path = ImageGalary;
 			sourceTree = "<group>";
@@ -163,7 +169,9 @@
 				4694A92A2154ACD1002C4B4F /* ImageGallaryViewController.swift in Sources */,
 				4694A9172154AADC002C4B4F /* AppDelegate.swift in Sources */,
 				461501C521562A0B00C605E9 /* Utilities.swift in Sources */,
+				46DCBB37215C637E00730DDA /* ImageGallaryModel.swift in Sources */,
 				465C52FE2159D0E9007A0D8F /* ImageStore.swift in Sources */,
+				46DCBB35215C630E00730DDA /* ImageGallaryTableViewController.swift in Sources */,
 				461501C32156266200C605E9 /* ImageGallaryCollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

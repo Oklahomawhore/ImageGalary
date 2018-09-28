@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageGallaryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDragDelegate, UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout, UIDropInteractionDelegate
+class ImageGallaryViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDragDelegate, UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout
 {
     //MARK: stored properties
     @IBOutlet weak var collectionView: UICollectionView! {
@@ -17,14 +17,32 @@ class ImageGallaryViewController: UIViewController, UICollectionViewDelegate, UI
             collectionView.dataSource = self
             collectionView.dragDelegate = self
             collectionView.dropDelegate = self
+            collectionView.addGestureRecognizer(UIPinchGestureRecognizer(target: self, action: #selector(pinchAction(_:))))
         }
     }
     
     private var imageURLs: [URL] = [URL]()
     private var cellRatios = [Double]()
-    private var images: [ImageStore]  = [ImageStore]() {
-        didSet {
-            self.collectionView.reloadData()
+    private var images: [ImageStore]  = [ImageStore]()
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if let imageCell = cell as? ImageCollectionViewCell {
+            imageCell.spinner.isHidden = false
+            imageCell.spinner.startAnimating()
+            imageCell.imageURL = images[indexPath.item].imageURL
+        }
+    }
+    
+    @objc func pinchAction(_ sender: UIPinchGestureRecognizer) {
+        if sender.view == collectionView {
+            switch sender.state {
+            case .changed:
+                fixedWidth = Double(sender.scale) * fixedWidth
+            case .ended:
+                break
+            default:
+                break
+            }
         }
     }
     
@@ -51,7 +69,11 @@ class ImageGallaryViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     //MARK: - collectionView flow layout
-    private var fixedWidth: Double = 300
+    private var fixedWidth: Double = 300 {
+        didSet {
+            collectionView.setNeedsLayout()
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.item < images.count {
@@ -99,22 +121,27 @@ class ImageGallaryViewController: UIViewController, UICollectionViewDelegate, UI
                 var cellRatio: Double = 1.0
                 
                 item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error)  in
-                    if let image = provider as? UIImage {
-                        cellRatio = Double( image.size.height / image.size.width )
+                    DispatchQueue.main.async {
+                        if let image = provider as? UIImage {
+                            cellRatio = Double( image.size.height / image.size.width )
+                        }
                     }
+                    
                 }
                 
                 item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) { (provider, error) in
-                    if let url = provider as? URL {
-                        placeholderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
+                    DispatchQueue.main.async {
+                        if let url = provider as? URL {
+                            placeholderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
                                 self.images.insert(ImageStore(url: url, ratio: cellRatio), at: insertionIndexPath.item)
                                 print("\(insertionIndexPath.debugDescription)")
-                        })
-                    } else {
-                        placeholderContext.deletePlaceholder()
+                            })
+                        } else {
+                            placeholderContext.deletePlaceholder()
+                        }
                     }
+                    
                 }
-                
                 
             }
         }

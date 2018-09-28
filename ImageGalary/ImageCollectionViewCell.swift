@@ -16,6 +16,7 @@ class ImageCollectionViewCell: UICollectionViewCell
     var imageURL: URL? {
         didSet {
             if imageURL != nil {
+                spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
                 fetchImage()
             }
         }
@@ -23,15 +24,25 @@ class ImageCollectionViewCell: UICollectionViewCell
     
     var imageFetcher: ImageFetcher!
     
+    var spinner: UIActivityIndicatorView! {
+        didSet {
+            spinner.hidesWhenStopped = true
+            spinner.center = imageView.center
+            self.contentView.addSubview(spinner)
+        }
+    }
+    
     private func fetchImage() {
         imageFetcher = ImageFetcher() {
             (url, image) in
             DispatchQueue.main.async { [weak self] in
                 if url == self?.imageURL {
                     self?.imageView.image = image
+                    self?.spinner.stopAnimating()
                 }
             }
         }
+        
         if let url = imageURL {
             imageFetcher.fetch(url)
         }
